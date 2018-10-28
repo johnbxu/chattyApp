@@ -8,7 +8,7 @@ class Messages extends Component {
   }
   render() {
     const messages = this.props.messages.map((message) => {
-      return (<Message message={message} key={message.key}/>)
+      return (<Message message={message} key={message.id}/>)
     })
     return (
       <main className="messages">

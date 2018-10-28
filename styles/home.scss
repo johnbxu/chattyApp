@@ -21,6 +21,11 @@ body {
   right: 0;
 }
 
+.chatbar-form {
+  display: flex;
+  width: 100%;
+}
+
 .chatbar-message,
 .chatbar-username {
   border: 1px solid black;
@@ -86,4 +91,8 @@ body {
   line-height: 60px;
   padding: 0 10px;
   text-decoration: none;
+}
+
+#submitBtn {
+  display: none;
 }

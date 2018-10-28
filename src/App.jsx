@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx'
 import NavBar from './NavBar.jsx';
+import generateRandomString from './random.js'
 
 class App extends Component {
   constructor(props) {
@@ -10,23 +11,37 @@ class App extends Component {
       currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [
          {
+           id: '1',
            username: 'Bob',
            content: 'Has anyone seen my marbles?',
-           key: '1'
          },
          {
+           id: '2',
            username: 'Anonymous',
            content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.',
-           key: '2'
          }
        ]
     }
+    this.submitMessage = this.submitMessage.bind(this);
   }
-  // const enterMessage = (event) => {
-  //   const newMessage = {
-  //     username =
-  //   }
-  // }
+  submitMessage (event) {
+    // const newMessage = {
+    //   username: event.
+    // }
+    event.preventDefault()
+    const newMessage = {
+      id: generateRandomString(8),
+      username: event.target.username.value,
+      content: event.target.content.value,
+    }
+    const oldMessages = this.state.messages
+    const newMessages = [...oldMessages, newMessage]
+    this.setState({
+      currentUser: {name: event.target.username.value},
+      messages: newMessages,
+    })
+    event.target.content.value = ''
+  }
   componentDidMount() {
     console.log("componentDidMount <App />");
     setTimeout(() => {
@@ -44,7 +59,7 @@ class App extends Component {
       <div>
         <NavBar />
         <MessageList messages={this.state.messages}/>
-        <ChatBar currentUser={this.state.currentUser} />
+        <ChatBar currentUser={this.state.currentUser} onSubmit={this.submitMessage}/>
       </div>
     );
   }
