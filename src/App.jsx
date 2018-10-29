@@ -34,6 +34,9 @@ class App extends Component {
       username: event.target.username.value,
       content: event.target.content.value,
     }
+
+    this.socket.send(JSON.stringify(newMessage));
+
     const oldMessages = this.state.messages
     const newMessages = [...oldMessages, newMessage]
     this.setState({
@@ -43,6 +46,10 @@ class App extends Component {
     event.target.content.value = ''
   }
   componentDidMount() {
+    this.socket = new WebSocket('ws://0.0.0.0:3001');
+    this.socket.onmessage = function(event) {
+      console.log(event.data)
+    }
     console.log("componentDidMount <App />");
     setTimeout(() => {
       console.log("Simulating incoming message");
