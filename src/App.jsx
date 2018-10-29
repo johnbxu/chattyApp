@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx'
 import NavBar from './NavBar.jsx';
-import generateRandomString from './random.js'
 
 class App extends Component {
   constructor(props) {
@@ -11,36 +10,52 @@ class App extends Component {
       currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: []
     }
-    this.submitMessage = this.submitMessage.bind(this);
     this.updateStateMessages = this.updateStateMessages.bind(this);
+    this._handleKeyPress = this._handleKeyPress.bind(this);
   }
-  submitMessage (event) {
-    event.preventDefault()
-    const newMessage = {
-      username: event.target.username.value,
-      content: event.target.content.value,
-    }
 
-    this.socket.send(JSON.stringify(newMessage));
-    event.target.content.value = ''
+  _handleKeyPress (event) {
+    if (event.key === 'Enter') {
+      const submission = {};
+      if (event.target.name === 'username') {
+        submission.type = 'postNotification';
+        submission.username = event.target.value;
+        submission.content = `${this.state.currentUser.name} has changed their name to ${event.target.value}`;
+      } else if (event.target.name === 'content') {
+        submission.type = 'postMessage';
+        submission.username = this.state.currentUser.name;
+        submission.content = event.target.value;
+        event.target.value = ''
+      }
+
+      this.socket.send(JSON.stringify(submission));
+    }
   }
 
   updateStateMessages(data) {
-    const receivedMessage = JSON.parse(data.data);
     const oldMessages = this.state.messages;
-    const newMessages = [...oldMessages, receivedMessage]
+    const newMessages = [...oldMessages, data]
     this.setState({
-      currentUser: {name: receivedMessage.username},
+      currentUser: { name: data.username },
       messages: newMessages,
     })
-    console.log(this.state)
   }
 
   componentDidMount() {
     const self = this;
     this.socket = new WebSocket('ws://0.0.0.0:3001');
+
+    this.socket.onopen = function(event) {
+      console.log('Connected to websocket server')
+    }
+
     this.socket.onmessage = function(event) {
-      self.updateStateMessages(event);
+      const response = JSON.parse(event.data)
+      if (response.type === 'postMessage' || response.type === 'postNotification') {
+          self.updateStateMessages(response);
+      } else {
+        throw new Error('Unknown event type' + response.type);
+      }
     }
     console.log("componentDidMount <App />");
   }
@@ -49,7 +64,7 @@ class App extends Component {
       <div>
         <NavBar />
         <MessageList messages={this.state.messages}/>
-        <ChatBar currentUser={this.state.currentUser} onSubmit={this.submitMessage}/>
+        <ChatBar currentUser={this.state.currentUser} onKeyPress={this._handleKeyPress}/>
       </div>
     );
   }
