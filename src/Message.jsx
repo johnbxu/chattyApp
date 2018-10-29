@@ -14,6 +14,7 @@ class Message extends Component {
           <div className="message">
             <span className="message-username" style={spanStyle}>{this.props.message.username}</span>
             <span className="message-content">{this.props.message.content}</span>
+            {this.props.message.img} && {this.props.message.img}
           </div>
         )
       } else if (this.props.message.type === 'postNotification') {
