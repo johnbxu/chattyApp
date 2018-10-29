@@ -79,6 +79,8 @@ body {
   position: fixed;
   right: 0;
   top: 0;
+  display: flex;
+  justify-content: space-between;
 }
 
 .navbar-brand {
@@ -91,6 +93,10 @@ body {
   line-height: 60px;
   padding: 0 10px;
   text-decoration: none;
+}
+
+.navbar span {
+  padding-top: 1.5rem;
 }
 
 #submitBtn {

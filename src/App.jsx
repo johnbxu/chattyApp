@@ -51,10 +51,21 @@ class App extends Component {
 
     this.socket.onmessage = function(event) {
       const response = JSON.parse(event.data)
-      if (response.type === 'postMessage' || response.type === 'postNotification') {
+      console.log(response)
+      switch(response.type) {
+        case 'postMessage':
           self.updateStateMessages(response);
-      } else {
-        throw new Error('Unknown event type' + response.type);
+          break;
+        case 'postNotification':
+          self.updateStateMessages(response);
+          break;
+        case 'updateUserCount':
+          self.setState({
+            userCount: response.userCount,
+          });
+          break;
+        default:
+          throw new Error('Unknown event type' + response.type);
       }
     }
     console.log("componentDidMount <App />");
@@ -62,7 +73,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar userCount={this.state.userCount}/>
         <MessageList messages={this.state.messages}/>
         <ChatBar currentUser={this.state.currentUser} onKeyPress={this._handleKeyPress}/>
       </div>
