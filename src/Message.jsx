@@ -6,9 +6,13 @@ class Message extends Component {
   }
   render() {
       if(this.props.message.type === 'postMessage') {
+        const spanStyle = {
+          color: this.props.message.color
+        }
+        console.log(this.props.message.color)
         return (
           <div className="message">
-            <span className="message-username">{this.props.message.username}</span>
+            <span className="message-username" style={spanStyle}>{this.props.message.username}</span>
             <span className="message-content">{this.props.message.content}</span>
           </div>
         )
