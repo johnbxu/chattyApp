@@ -1,4 +1,5 @@
 import React from 'react';
+
 const ChatBar = ({currentUser, onKeyPress}) => {
   return (
     <footer className="chatbar">
@@ -7,4 +8,5 @@ const ChatBar = ({currentUser, onKeyPress}) => {
     </footer>
   );
 }
+
 export default ChatBar;

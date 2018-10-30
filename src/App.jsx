@@ -8,35 +8,40 @@ class App extends Component {
   constructor(props) {
     super(props),
     this.state = {
-      currentUser: {name: 'Annonymous'}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {name: 'Annonymous'},
       messages: []
     }
-    this.updateStateMessages = this.updateStateMessages.bind(this);
-    this._handleKeyPress = this._handleKeyPress.bind(this);
   }
 
-  _handleKeyPress (event) {
+  // Handles key press for chat bar inputs
+  _handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      const submission = {};
+
       if (event.target.name === 'username') {
+        const submission = {
+          type: 'postNotification',
+          username: event.target.value,
+          content: `${this.state.currentUser.name} has changed their name to ${event.target.value}`,
+        }
         this.setState({
           currentUser: { name: event.target.value }
         });
-        submission.type = 'postNotification';
-        submission.username = event.target.value;
-        submission.content = `${this.state.currentUser.name} has changed their name to ${event.target.value}`;
-      } else if (event.target.name === 'content') {
-        submission.type = 'postMessage';
-        submission.username = this.state.currentUser.name;
-        submission.content = event.target.value;
-        event.target.value = ''
-      }
+        this.socket.send(JSON.stringify(submission));
 
-      this.socket.send(JSON.stringify(submission));
+      } else if (event.target.name === 'content') {
+        const submission = {
+          type: 'postMessage',
+          username: this.state.currentUser.name,
+          content: event.target.value,
+        }
+        event.target.value = ''
+        this.socket.send(JSON.stringify(submission));
+      }
     }
   }
 
-  updateStateMessages(data) {
+  // Displays new message received from WebSocket server
+  updateStateMessages = (data) => {
     const oldMessages = this.state.messages;
     const newMessages = [...oldMessages, data]
     this.setState({
@@ -46,39 +51,42 @@ class App extends Component {
     })
   }
 
+  // Creates WebSocket object and submits a connection message to server
   componentDidMount() {
-    const self = this;
     this.socket = new WebSocket('ws://0.0.0.0:3001');
 
-    this.socket.onopen = function(event) {
-      const submission = {};
+    this.socket.onopen = (event) => {
       console.log('Connected to websocket server')
-      submission.type = 'postConnection'
-      submission.username = self.state.currentUser.name;
-      submission.content = `${self.state.currentUser.name} has connected`
-      self.socket.send(JSON.stringify(submission));
+
+      const submission = {
+        type: 'postConnection',
+        username: this.state.currentUser.name,
+        content: `${this.state.currentUser.name} has connected`,
+      };
+      console.log(this)
+      this.socket.send(JSON.stringify(submission));
     }
 
-    this.socket.onmessage = function(event) {
+    this.socket.onmessage = (event) => {
       const response = JSON.parse(event.data)
-      console.log(response)
+
       switch(response.type) {
         case 'postMessage':
-          self.updateStateMessages(response);
+          this.updateStateMessages(response);
           break;
         case 'postNotification':
-          self.updateStateMessages(response);
+          this.updateStateMessages(response);
           break;
         case 'postConnection':
-          self.updateStateMessages(response);
+          this.updateStateMessages(response);
           break;
-
         default:
           throw new Error('Unknown event type' + response.type);
       }
     }
     console.log("componentDidMount <App />");
   }
+
   render() {
     return (
       <div>
@@ -92,9 +100,5 @@ class App extends Component {
     );
   }
 }
-export default App;
 
-// stretch goals:
-// 1. date
-// 2. profile pic
-// 3. emoticon drawer
+export default App;

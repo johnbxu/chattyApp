@@ -1,20 +1,16 @@
 import Message from './Message.jsx';
 
-import React, {Component} from 'react';
+import React from 'react';
 
-class Messages extends Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-    const messages = this.props.messages.map((message) => {
-      return (<Message message={message} key={message.id}/>)
-    })
-    return (
-      <main className="messages">
-        {messages}
-      </main>
-    );
-  }
+// Renders a list of all messages contained in app's state
+const Messages = ({messages}) => {
+  const messageList = messages.map((message) => {
+    return (<Message message={message} key={message.id}/>)
+  })
+  return (
+    <main className="messages">
+      {messageList}
+    </main>
+  );
 }
 export default Messages;
