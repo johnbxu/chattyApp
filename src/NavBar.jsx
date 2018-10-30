@@ -8,4 +8,5 @@ const NavBar = ({userCount}) => {
     </nav>
   );
 }
+
 export default NavBar;

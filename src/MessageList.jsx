@@ -13,4 +13,5 @@ const Messages = ({messages}) => {
     </main>
   );
 }
+
 export default Messages;

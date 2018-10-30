@@ -16,9 +16,9 @@ class App extends Component {
   // Handles key press for chat bar inputs
   _handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-
+      let submission ={}
       if (event.target.name === 'username') {
-        const submission = {
+        submission = {
           type: 'postNotification',
           username: event.target.value,
           content: `${this.state.currentUser.name} has changed their name to ${event.target.value}`,
@@ -26,17 +26,17 @@ class App extends Component {
         this.setState({
           currentUser: { name: event.target.value }
         });
-        this.socket.send(JSON.stringify(submission));
+        // this.socket.send(JSON.stringify(submission));
 
       } else if (event.target.name === 'content') {
-        const submission = {
+        submission = {
           type: 'postMessage',
           username: this.state.currentUser.name,
           content: event.target.value,
         }
         event.target.value = ''
-        this.socket.send(JSON.stringify(submission));
       }
+      this.socket.send(JSON.stringify(submission));
     }
   }
 
@@ -46,6 +46,11 @@ class App extends Component {
     const newMessages = [...oldMessages, data]
     this.setState({
       messages: newMessages,
+    })
+  }
+
+  updateUsers = (data) => {
+    this.setState({
       connectedUsers: data.connectedUsers,
       userCount: data.userCount,
     })
@@ -53,7 +58,7 @@ class App extends Component {
 
   // Creates WebSocket object and submits a connection message to server
   componentDidMount() {
-    this.socket = new WebSocket('ws://0.0.0.0:3001');
+    this.socket = new WebSocket('ws://10.110.110.95:3001');
 
     this.socket.onopen = (event) => {
       console.log('Connected to websocket server')
@@ -63,13 +68,11 @@ class App extends Component {
         username: this.state.currentUser.name,
         content: `${this.state.currentUser.name} has connected`,
       };
-      console.log(this)
       this.socket.send(JSON.stringify(submission));
     }
 
     this.socket.onmessage = (event) => {
       const response = JSON.parse(event.data)
-
       switch(response.type) {
         case 'postMessage':
           this.updateStateMessages(response);
@@ -79,6 +82,11 @@ class App extends Component {
           break;
         case 'postConnection':
           this.updateStateMessages(response);
+          this.updateUsers(response);
+          break;
+        case 'postDisconnect':
+          this.updateStateMessages(response);
+          this.updateUsers(response);
           break;
         default:
           throw new Error('Unknown event type' + response.type);

@@ -22,7 +22,7 @@ const Message = ({message}) => {
     )
 
   // Renders notifications
-  } else if (message.type === 'postNotification' || message.type === 'postConnection') {
+} else if (message.type === 'postNotification' || message.type === 'postConnection' || message.type === 'postDisconnect') {
     return (
       <div className="message system">
         {message.content}
@@ -30,4 +30,5 @@ const Message = ({message}) => {
     )
   }
 }
+
 export default Message;

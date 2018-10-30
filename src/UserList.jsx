@@ -5,13 +5,13 @@ import uuid from 'uuid';
 const UserList = ({connectedUsers}) => {
   const list = connectedUsers && connectedUsers.map(user => (
     <li key={uuid()}>{user}</li>
-  ))
+  ));
   return (
     <div className="userList">
       <h4>Users Online</h4>
       <ul>{list}</ul>
     </div>
-  )
+  );
 }
 
 export default UserList;
