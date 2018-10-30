@@ -17,7 +17,7 @@ body {
 }
 
 .chatbar {
-  background: #a2d68b;
+  background: #3b95b0;
   border-top: 1px solid #525852;
   bottom: 0;
   display: flex;
@@ -61,7 +61,8 @@ body {
 }
 
 .message-content,
-.message-username {
+.message-username,
+.message-date {
   overflow: hidden;
   margin: 5px;
   padding: 0 10px;
@@ -74,6 +75,7 @@ body {
 .message-username {
   flex: 2;
   font-weight: 700;
+  min-width: 7rem;
 }
 
 .mainContainer {
@@ -84,11 +86,12 @@ body {
 .userList {
   border: 1px solid black;
   padding: 1rem;
-  background: #d6938b;
+  margin-right: 1rem;
+  background: #508696;
   height: 50%;
 }
 .navbar {
-  background: #a2d68b;
+  background: #3b95b0;
   border-bottom: 1px solid #525852;
   height: 60px;
   left: 0;

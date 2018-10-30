@@ -18,6 +18,7 @@ class Message extends Component {
         <div>
           <div className="message">
             <span className="message-username" style={spanStyle}>{this.props.message.username}</span>
+            <span className="message-date">{this.props.message.date.slice(11,19)}</span>
             <span className="message-content">{this.props.message.content}</span>
           </div>
           {imgs}

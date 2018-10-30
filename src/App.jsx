@@ -98,4 +98,3 @@ export default App;
 // 1. date
 // 2. profile pic
 // 3. emoticon drawer
-// 4. connected list of clients
