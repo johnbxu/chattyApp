@@ -51,7 +51,6 @@ class App extends Component {
 
     this.socket.onmessage = function(event) {
       const response = JSON.parse(event.data)
-      console.log(response)
       switch(response.type) {
         case 'postMessage':
           self.updateStateMessages(response);
