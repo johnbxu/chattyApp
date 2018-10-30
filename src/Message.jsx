@@ -8,6 +8,7 @@ class Message extends Component {
 
   render() {
     const images = this.props.message.imgs.map(img => (<img className="image" src={img} key={img}/>))
+    console.log(images)
     const imgs = this.props.message.imgs && <div>{images}</div>
     if(this.props.message.type === 'postMessage') {
       const spanStyle = {
@@ -22,7 +23,7 @@ class Message extends Component {
           {imgs}
         </div>
       )
-    } else if (this.props.message.type === 'postNotification') {
+    } else if (this.props.message.type === 'postNotification' || this.props.message.type === 'postConnection') {
       return (
         <div className="message system">
           {this.props.message.content}

@@ -17,8 +17,8 @@ body {
 }
 
 .chatbar {
-  background: tomato;
-  border-top: 1px solid black;
+  background: #a2d68b;
+  border-top: 1px solid #525852;
   bottom: 0;
   display: flex;
   left: 0;
@@ -34,7 +34,7 @@ body {
 
 .chatbar-message,
 .chatbar-username {
-  border: 1px solid black;
+  border: 1px solid #525852;
   display: block;
   height: 40px;
   line-height: 40px;
@@ -76,9 +76,20 @@ body {
   font-weight: 700;
 }
 
+.mainContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userList {
+  border: 1px solid black;
+  padding: 1rem;
+  background: #d6938b;
+  height: 50%;
+}
 .navbar {
-  background: tomato;
-  border-bottom: 1px solid black;
+  background: #a2d68b;
+  border-bottom: 1px solid #525852;
   height: 60px;
   left: 0;
   padding: 0 10px;

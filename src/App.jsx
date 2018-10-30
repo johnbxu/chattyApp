@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx'
 import NavBar from './NavBar.jsx';
+import UserList from './UserList.jsx';
 
 class App extends Component {
   constructor(props) {
     super(props),
     this.state = {
-      currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {name: 'Annonymous'}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: []
     }
     this.updateStateMessages = this.updateStateMessages.bind(this);
@@ -18,6 +19,9 @@ class App extends Component {
     if (event.key === 'Enter') {
       const submission = {};
       if (event.target.name === 'username') {
+        this.setState({
+          currentUser: { name: event.target.value }
+        });
         submission.type = 'postNotification';
         submission.username = event.target.value;
         submission.content = `${this.state.currentUser.name} has changed their name to ${event.target.value}`;
@@ -36,8 +40,9 @@ class App extends Component {
     const oldMessages = this.state.messages;
     const newMessages = [...oldMessages, data]
     this.setState({
-      currentUser: { name: data.username },
       messages: newMessages,
+      connectedUsers: data.connectedUsers,
+      userCount: data.userCount,
     })
   }
 
@@ -46,11 +51,17 @@ class App extends Component {
     this.socket = new WebSocket('ws://0.0.0.0:3001');
 
     this.socket.onopen = function(event) {
+      const submission = {};
       console.log('Connected to websocket server')
+      submission.type = 'postConnection'
+      submission.username = self.state.currentUser.name;
+      submission.content = `${self.state.currentUser.name} has connected`
+      self.socket.send(JSON.stringify(submission));
     }
 
     this.socket.onmessage = function(event) {
       const response = JSON.parse(event.data)
+      console.log(response)
       switch(response.type) {
         case 'postMessage':
           self.updateStateMessages(response);
@@ -58,11 +69,10 @@ class App extends Component {
         case 'postNotification':
           self.updateStateMessages(response);
           break;
-        case 'updateUserCount':
-          self.setState({
-            userCount: response.userCount,
-          });
+        case 'postConnection':
+          self.updateStateMessages(response);
           break;
+
         default:
           throw new Error('Unknown event type' + response.type);
       }
@@ -73,10 +83,19 @@ class App extends Component {
     return (
       <div>
         <NavBar userCount={this.state.userCount}/>
-        <MessageList messages={this.state.messages}/>
+        <div className="mainContainer">
+          <MessageList messages={this.state.messages}/>
+          <UserList connectedUsers={this.state.connectedUsers}/>
+        </div>
         <ChatBar currentUser={this.state.currentUser} onKeyPress={this._handleKeyPress}/>
       </div>
     );
   }
 }
 export default App;
+
+// stretch goals:
+// 1. date
+// 2. profile pic
+// 3. emoticon drawer
+// 4. connected list of clients
