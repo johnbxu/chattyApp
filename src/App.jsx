@@ -26,7 +26,6 @@ class App extends Component {
         this.setState({
           currentUser: { name: event.target.value }
         });
-        // this.socket.send(JSON.stringify(submission));
 
       } else if (event.target.name === 'content') {
         submission = {
@@ -49,6 +48,7 @@ class App extends Component {
     })
   }
 
+  // Updates the users counter and user list
   updateUsers = (data) => {
     this.setState({
       connectedUsers: data.connectedUsers,
@@ -58,19 +58,20 @@ class App extends Component {
 
   // Creates WebSocket object and submits a connection message to server
   componentDidMount() {
-    this.socket = new WebSocket('ws://10.110.110.95:3001');
+    this.socket = new WebSocket('ws://0.0.0.0:3001');
 
     this.socket.onopen = (event) => {
       console.log('Connected to websocket server')
 
       const submission = {
-        type: 'postConnection',
+        type: 'postNotification',
         username: this.state.currentUser.name,
         content: `${this.state.currentUser.name} has connected`,
       };
       this.socket.send(JSON.stringify(submission));
     }
 
+    // Calls appropriate state-modifying functions based on message from socket server
     this.socket.onmessage = (event) => {
       const response = JSON.parse(event.data)
       switch(response.type) {
@@ -78,13 +79,6 @@ class App extends Component {
           this.updateStateMessages(response);
           break;
         case 'postNotification':
-          this.updateStateMessages(response);
-          break;
-        case 'postConnection':
-          this.updateStateMessages(response);
-          this.updateUsers(response);
-          break;
-        case 'postDisconnect':
           this.updateStateMessages(response);
           this.updateUsers(response);
           break;
