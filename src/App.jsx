@@ -97,7 +97,7 @@ class App extends Component {
           <MessageList messages={this.state.messages}/>
           <UserList connectedUsers={this.state.connectedUsers}/>
         </div>
-        <ChatBar currentUser={this.state.currentUser} onKeyPress={this._handleKeyPress}/>
+        <ChatBar currentUser={this.state.currentUser} _handleKeyPress={this._handleKeyPress}/>
       </div>
     );
   }

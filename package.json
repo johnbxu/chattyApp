@@ -1,7 +1,7 @@
 {
   "name": "ChattyApp",
   "version": "1.0.0",
-  "description": "Simple and lightweight Boilerplate for ReactJS projects",
+  "description": "Simple websocket-based chat app",
   "scripts": {
     "lint": "eslint --ext .jsx,.js src",
     "start": "node server.js"
@@ -13,13 +13,10 @@
   "keywords": [
     "react",
     "reactjs",
-    "boilerplate",
     "reload",
-    "live",
-    "edit",
     "webpack"
   ],
-  "author": "Noah-Jerome Lotzer <n.lotzer@neusta.de>",
+  "author": "John Xu <johnbxu@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/johnbxu/chattyApp/issues"
