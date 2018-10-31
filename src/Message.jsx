@@ -9,7 +9,7 @@ const Message = ({message}) => {
   if(message.type === 'postMessage') {
     const spanStyle = {
       color: message.color
-    }
+    };
     return (
       <div>
         <div className="message">
@@ -19,7 +19,7 @@ const Message = ({message}) => {
         </div>
         {imgs}
       </div>
-    )
+    );
 
   // Renders notifications
 } else if (message.type === 'postNotification' || message.type === 'postConnection' || message.type === 'postDisconnect') {
@@ -27,7 +27,7 @@ const Message = ({message}) => {
       <div className="message system">
         {message.content}
       </div>
-    )
+    );
   }
 }
 
