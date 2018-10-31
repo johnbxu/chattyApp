@@ -56,6 +56,10 @@ class App extends Component {
     });
   }
 
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  }
+  
   // Creates WebSocket object and submits a connection message to server
   componentDidMount() {
     this.socket = new WebSocket('ws://0.0.0.0:3001');
@@ -89,15 +93,23 @@ class App extends Component {
     console.log("componentDidMount <App />");
   }
 
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
   render() {
     return (
       <div>
-        <NavBar userCount={this.state.userCount}/>
+        <NavBar />
         <div className="mainContainer">
           <MessageList messages={this.state.messages}/>
-          <UserList connectedUsers={this.state.connectedUsers}/>
+          <UserList connectedUsers={this.state.connectedUsers} userCount={this.state.userCount}/>
         </div>
         <ChatBar currentUser={this.state.currentUser} _handleKeyPress={this._handleKeyPress}/>
+        {/* Hidden div to scroll to on new messages */}
+        <div style={{ float:"left", clear: "both" }}
+             ref={(el) => { this.messagesEnd = el; }}>
+        </div>
       </div>
     );
   }

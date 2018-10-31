@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:400,700');
+$primary-color: #3d3d3d;
+$chat-background: #f6f7f4;
+
+html {
+  background-color: $chat-background;
+}
 h1 {
   color: tomato;
 }
@@ -17,14 +24,15 @@ body {
 }
 
 .chatbar {
-  background: #3b95b0;
-  border-top: 1px solid #525852;
+  background: $primary-color;
+  border-top: 1px solid grey;
   bottom: 0;
   display: flex;
   left: 0;
   padding: 5px;
   position: fixed;
   right: 0;
+  font-family: 'Titillium Web', sans-serif;
 }
 
 .chatbar-form {
@@ -34,7 +42,7 @@ body {
 
 .chatbar-message,
 .chatbar-username {
-  border: 1px solid #525852;
+  border: 1px solid grey;
   display: block;
   height: 40px;
   line-height: 40px;
@@ -53,6 +61,7 @@ body {
 .message {
   display: flex;
   padding: 5px;
+  font-family: sans-serif;
 }
 
 .message.system {
@@ -81,17 +90,22 @@ body {
 .mainContainer {
   display: flex;
   justify-content: space-between;
+  background: $chat-background;
 }
 
-.userList {
-  border: 1px solid black;
+.list-group {
+  border: 1px solid grey;
+  border-radius: 0.3rem;
   padding: 1rem;
   margin-right: 1rem;
-  background: #508696;
-  height: 50%;
+  background: #d8d2cd;
+  max-height: 50%;
+  position: fixed;
+  right: 0rem;
+  font-family: 'Titillium Web', sans-serif;
 }
 .navbar {
-  background: #3b95b0;
+  background: $primary-color;
   border-bottom: 1px solid #525852;
   height: 60px;
   left: 0;
@@ -101,10 +115,17 @@ body {
   top: 0;
   display: flex;
   justify-content: space-between;
+  font-family: 'Titillium Web', sans-serif;
+  text-shadow: 2px 2px black; 
+}
+
+.navbar span {
+  padding-right: 1rem;
+  font-size: 1rem;
 }
 
 .navbar-brand {
-  color: inherit;
+  color: white;
   display: block;
   float: left;
   font-weight: 700;
@@ -113,10 +134,6 @@ body {
   line-height: 60px;
   padding: 0 10px;
   text-decoration: none;
-}
-
-.navbar span {
-  padding-top: 1.5rem;
 }
 
 #submitBtn {
