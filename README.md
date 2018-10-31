@@ -1,45 +1,31 @@
-React Boilerplate
-=====================
+# ChattyApp
 
-A minimal and light dev environment for ReactJS.
+## Description
+ChattyApp is a simple, single-page, real time chat app built using ReactJS and websockets.
 
-### Usage
+Connected users are able type text messages, display pictures, change their username, and they are assigned a user random color upon connection.
 
-Clone the boilerplate and create your own git repo.
+Users may also see notifications when other users connect or disconnect, and can see a list of users currently connected.
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
+## Screenshots
 
-Install the dependencies and start the server.
+![screenshot of a chat session]
+![screenshot of users disconnecting and connecting]
 
-```
-npm install
-npm start
-open http://localhost:3000
-```
+## Getting Started
 
-### Static Files
-
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
-
-### Linting
-
-This boilerplate project includes React ESLint configuration.
-
-```
-npm run lint
-```
+1. Clone this repo as well as the repo for the websocket server
+2. Install all dependencies for both directories (using `npm install`)
+3. Run the web server using `node server.js`
+4. Run the websocket server using `node server.js`  
+5. Connect to localhost:3000 with a browser  
 
 ### Dependencies
 
+* Node
+* Express
 * React
 * Webpack
+* Uuid
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
