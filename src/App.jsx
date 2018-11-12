@@ -62,7 +62,7 @@ class App extends Component {
 
   // Creates WebSocket object and submits a connection message to server
   componentDidMount() {
-    this.socket = new WebSocket('ws://192.168.0.115:3001');
+    this.socket = new WebSocket('ws://0.0.0.0:3001');
 
     this.socket.onopen = (event) => {
       console.log('Connected to websocket server');
