@@ -14,11 +14,12 @@ Users may also see notifications when other users connect or disconnect, and can
 
 ## Getting Started
 
-1. Clone this repo as well as the repo for the websocket server (https://github.com/johnbxu/chattyAppWebSocketServer)
-2. Install all dependencies for both directories (using `npm install`)
-3. Run the web server using `node server.js`
-4. Run the websocket server using `node server.js`  
-5. Connect to localhost:3000 with a browser  
+1. Clone this repo
+2. Install all dependencies for the chatty app directory (using `npm install`)
+3. Install all dependencies for the webSocketServer directory (using `npm install`)
+4. Run the web server using `/node server.js`
+5. Run the websocket server using `/webSocketServer/node server.js`  
+6. Connect to localhost:3000 with a browser  
 
 ### Dependencies
 
