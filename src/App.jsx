@@ -59,10 +59,10 @@ class App extends Component {
   scrollToBottom = () => {
     this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
-  
+
   // Creates WebSocket object and submits a connection message to server
   componentDidMount() {
-    this.socket = new WebSocket('ws://0.0.0.0:3001');
+    this.socket = new WebSocket('ws://192.168.0.115:3001');
 
     this.socket.onopen = (event) => {
       console.log('Connected to websocket server');
@@ -86,6 +86,9 @@ class App extends Component {
           this.updateStateMessages(response);
           this.updateUsers(response);
           break;
+        case 'userid':
+          this.setState({ userid: response.userid });
+          break;
         default:
           throw new Error('Unknown event type' + response.type);
       }
@@ -102,7 +105,7 @@ class App extends Component {
       <div>
         <NavBar />
         <div className="mainContainer">
-          <MessageList messages={this.state.messages}/>
+          <MessageList messages={this.state.messages} userid={this.state.userid}/>
           <UserList connectedUsers={this.state.connectedUsers} userCount={this.state.userCount}/>
         </div>
         <ChatBar currentUser={this.state.currentUser} _handleKeyPress={this._handleKeyPress}/>

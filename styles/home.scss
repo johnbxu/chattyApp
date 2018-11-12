@@ -58,6 +58,13 @@ body {
   flex: 2;
 }
 
+.user-message {
+  display: flex;
+  padding: 5px;
+  font-family: sans-serif;
+  margin-left: 20rem;
+}
+
 .message {
   display: flex;
   padding: 5px;
@@ -72,13 +79,15 @@ body {
 .message-content,
 .message-username,
 .message-date {
-  overflow: hidden;
   margin: 5px;
   padding: 0 10px;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 .message-content {
   flex: 8;
+  max-width: 30rem;
 }
 
 .message-username {
@@ -94,14 +103,12 @@ body {
 }
 
 .list-group {
-  border: 1px solid grey;
-  border-radius: 0.3rem;
   padding: 1rem;
-  margin-right: 1rem;
   background: #d8d2cd;
   max-height: 50%;
   position: fixed;
   right: 0rem;
+  top: 3.75rem;
   font-family: 'Titillium Web', sans-serif;
 }
 .navbar {
@@ -116,7 +123,7 @@ body {
   display: flex;
   justify-content: space-between;
   font-family: 'Titillium Web', sans-serif;
-  text-shadow: 2px 2px black; 
+  text-shadow: 2px 2px black;
 }
 
 .navbar span {
